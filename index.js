@@ -60,8 +60,12 @@ app.post("/",function(req,res){
 const uri = "mongodb+srv://shrikara:shri1234@cluster0.vxnu2.mongodb.net/sample?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  console.log("connected to mongoDB");
+  const collection = client.db("sample").collection("sample");
+  collection.find({}).toArray(function(err,samples){
+      console.log("Below items:");
+      console.log(samples);
+  });
+  console.log("closing connection to mongoDB");
   client.close();
 });
   res.send();
