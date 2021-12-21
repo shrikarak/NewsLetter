@@ -4,19 +4,20 @@ const bodyParser = require("body-parser");
 const https = require("https");
 //const mongodb = require('mongodb');
 const mongoose = require('mongoose');
-
+const { MongoClient } = require('mongodb');
+/*
 main().catch(err => console.log(err));
 
 async function main() {
 await mongoose.connect("mongodb://shrikara:shri1234@cluster0.vxnu2.mongodb.net/sample?retryWrites=true&w=majority");
-}
+}*/
 //const uri = "mongodb://shrikara:shri1234@cluster0.vxnu2.mongodb.net/sample?retryWrites=true&w=majority";
 //const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
+/*
 const kittySchema = new mongoose.Schema({
   name: String
-});
-
+});*/
+/*
 const Kitten = mongoose.model('Kitten', kittySchema);
 const silence = new Kitten({ name: 'Silence' });
 console.log(silence.name); 
@@ -27,7 +28,7 @@ saveCat().catch(err => console.log(err));
 async function saveCat() {
 await fluffy.save();
 }
-
+*/
 
 const app = express();
 app.use(express.static("remote"));
@@ -52,10 +53,17 @@ app.post("/",function(req,res){
     }
   }]
 };
-  Kitten.find(function(err,kittens){
-res.write(kittens);
-});
+  //Kitten.find(function(err,kittens){
+//res.write(kittens);
+//});
   
+const uri = "mongodb+srv://shrikara:shri1234@cluster0.vxnu2.mongodb.net/sample?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  console.log("connected to mongoDB");
+  client.close();
+});
   res.send();
 // client.connect(err => {
   // const collection = client.db("sample").collection("sample");
