@@ -22,8 +22,12 @@ const silence = new Kitten({ name: 'Silence' });
 console.log(silence.name); 
 
 const fluffy = new Kitten({ name: 'fluffy' });
-fluffy.save();
-const kittens = Kitten.find();
+saveCat().catch(err => console.log(err));
+
+async function saveCat() {
+await fluffy.save();
+}
+
 
 const app = express();
 app.use(express.static("remote"));
@@ -48,7 +52,10 @@ app.post("/",function(req,res){
     }
   }]
 };
-  res.write(kittens);
+  Kitten.find(function(err,kittens){
+res.write(kittens);
+});
+  
   res.send();
 // client.connect(err => {
   // const collection = client.db("sample").collection("sample");
