@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 main().catch(err => console.log(err));
 
 async function main() {
-await mongoose.connect("mongodb://shrikara:shri1234@cluster0.vxnu2.mongodb.net/sample");
+await mongoose.connect("mongodb://shrikara:shri1234@cluster0.vxnu2.mongodb.net/sample?retryWrites=true&w=majority");
 }
 //const uri = "mongodb://shrikara:shri1234@cluster0.vxnu2.mongodb.net/sample?retryWrites=true&w=majority";
 //const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
