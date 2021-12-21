@@ -60,11 +60,22 @@ app.post("/",function(req,res){
 const uri = "mongodb+srv://shrikara:shri1234@cluster0.vxnu2.mongodb.net/sample?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
-  const collection = client.db("sample").collection("sample");
-  collection.find({}).toArray(function(err,samples){
-      console.log("Below items:");
-      console.log(samples);
+  const db = client.db("sample");
+  const insertDBDocs = function(db,callback) {
+  const collection = db.collection("sample");
+  collection.insertMany([{a : 1},{a : 2}], function (err,result){
+   console.log("inserted 3 documents");
+    callback(result);
   });
+  }
+  const queryDBDocs = function(db,callback) {
+  const collection = db.collection("sample");
+  collection.find({}).toArray(function(err,result){
+      console.log("Below items:");
+      console.log(result);
+    callback(result);
+  });
+  }
   console.log("closing connection to mongoDB");
   client.close();
 });
