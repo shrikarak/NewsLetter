@@ -4,7 +4,12 @@ const bodyParser = require("body-parser");
 const https = require("https");
 //const mongodb = require('mongodb');
 const mongoose = require('mongoose');
-mongoose.connect("mongodb://shrikara:shri1234@cluster0.vxnu2.mongodb.net/sample");
+
+main().catch(err => console.log(err));
+
+async function main() {
+await mongoose.connect("mongodb://shrikara:shri1234@cluster0.vxnu2.mongodb.net/sample");
+}
 //const uri = "mongodb://shrikara:shri1234@cluster0.vxnu2.mongodb.net/sample?retryWrites=true&w=majority";
 //const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
