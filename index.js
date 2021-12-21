@@ -2,10 +2,23 @@ const express = require("express");
 const request = require("request");
 const bodyParser = require("body-parser");
 const https = require("https");
-const { MongoClient } = require('mongodb');
+//const mongodb = require('mongodb');
+const mongoose = require('mongoose');
+mongoose.connect("mongodb://shrikara:shri1234@cluster0.vxnu2.mongodb.net/sample");
+//const uri = "mongodb://shrikara:shri1234@cluster0.vxnu2.mongodb.net/sample?retryWrites=true&w=majority";
+//const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-const uri = "mongodb+srv://shrikara:shri1234@cluster0.vxnu2.mongodb.net/sample?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const kittySchema = new mongoose.Schema({
+  name: String
+});
+
+const Kitten = mongoose.model('Kitten', kittySchema);
+const silence = new Kitten({ name: 'Silence' });
+console.log(silence.name); 
+
+const fluffy = new Kitten({ name: 'fluffy' });
+fluffy.save();
+const kittens = Kitten.find();
 
 const app = express();
 app.use(express.static("remote"));
@@ -30,15 +43,16 @@ app.post("/",function(req,res){
     }
   }]
 };
-  
-client.connect(err => {
-  const collection = client.db("sample").collection("sample");
-  res.write(collection.find({}));
+  res.write(kittens);
+  res.send();
+// client.connect(err => {
+  // const collection = client.db("sample").collection("sample");
+  // res.write(collection.find({}));
   // perform actions on the collection object
-  client.close();
-});
+  // client.close();
+// });
 
-res.send();
+
   /*const memberJson = JSON.stringify(member);
   const url = "https://us20.api.mailchimp.com/3.0/lists/a68152976b";
   const options = {
